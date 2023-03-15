@@ -1,0 +1,113 @@
+\documentclass{report}
+\usepackage{tikz}
+\usepackage[utf8]{vietnam}
+\usepackage[english]{babel}
+\usepackage{fancyhdr} 
+\usepackage{hyperref} % Hyperlink
+\usepackage{parskip}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usetikzlibrary{calc}
+\newcommand\HRule{\rule{\textwidth}{1pt}}
+\setcounter{secnumdepth}{5} 
+
+
+\begin{document}
+
+% ========== [TITLE PAGE] ==========
+\begin{titlepage}
+
+\begin{tikzpicture}[overlay,remember picture]
+\draw[line width=4pt]
+    ($ (current page.north west) + (1cm,-1cm) $)
+    rectangle
+    ($ (current page.south east) + (-1cm,1cm) $);
+\draw[line width=1.5pt]
+    ($ (current page.north west) + (1.2cm,-1.2cm) $)
+    rectangle
+    ($ (current page.south east) + (-1.2cm,1.2cm) $);
+\end{tikzpicture}
+
+
+\begin{center}
+% Upper part of the page
+\textbf{\Large UNIVERSITY OF SCIENCE}\\
+\textbf{\Large FACULTY OF INFORMATION TECHNOLOGY}\\
+
+% University Logo
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm, height=8cm]{KHTN.png}
+\end{figure}
+
+% Title
+\HRule \\[0.4cm]
+{\huge \bfseries REPORT}\\[0.4cm]
+\textsc{\Large Subject}
+\HRule \\[1cm]
+
+% Student name
+\begin{center}
+    \textbf{\Large HOÀNG ĐỨC VIỆT - 21127203}\\[4cm]
+\end{center}
+
+% Advisor name
+\begin{center}
+    \textbf{\Large Lecturers: \\[0.2cm]}
+    \Large{Mr.ABC \\[0.2cm] Mr.DEF \\[0.2cm] Mr.123}
+\end{center}
+\vfill
+
+% Bottom of the page
+\selectlanguage{english} % Change language
+{\large \today}
+\end{center}
+\end{titlepage}
+% ========== END [TITLE PAGE] ==========
+
+
+
+
+
+% ========== [HEADER AND FOOTER] ==========
+\pagestyle{fancy}
+\setlength{\headheight}{0.5cm}
+\fancyhf{}
+\lhead{\textbf{Left}}
+\rhead{\textbf{Right}}
+\rfoot{Page \thepage}
+% ========== END [HEADER AND FOOTER] ==========
+
+
+
+
+
+% ========== [TABLE OF CONTENTS] ==========
+\Large
+\tableofcontents
+\thispagestyle{fancy} % Fix footer and header
+\vfill
+\pagebreak
+% ========== END [TABLE OF CONTENTS] ==========
+
+
+
+
+
+% ========== [SECTION NUMBERING] ==========
+\renewcommand\thesection{\arabic{section}} % Section start from 1,2,3...
+\renewcommand\thesubsection{\thesection.\arabic{subsection}} % Subsection start from 1,2,3,...
+\renewcommand\thesubsubsection{\alph{subsubsection}} 
+% ========== END [SECTION NUMBERING] ==========
+
+
+
+
+
+% ========== [MAIN CONTENT] ==========
+\section{References}
+\begin{itemize}
+    \item \href{https://tex.stackexchange.com/questions/407812/page-border-for-cover-page-in-latex}{Title page border}
+\end{itemize}
+% ========== END [MAIN CONTENT] ==========
+\end{document}
+% ========== ducviet5138 ==========
