@@ -1,14 +1,27 @@
 \documentclass{report}
 \usepackage{tikz}
+\usepackage{fancyhdr}
 \usepackage[utf8]{vietnam}
-\usepackage[english]{babel}
-\usepackage{fancyhdr} 
 \usepackage{hyperref} % Hyperlink
 \usepackage{parskip}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usetikzlibrary{calc}
-\newcommand\HRule{\rule{\textwidth}{1pt}}
-\setcounter{secnumdepth}{5} 
+\usepackage{titlesec} % Change section font
+
+
+
+
+
+% ========== [LANGUAGE] ==========
+\def\lang{1} % 0 == English, 1 == Vietnamese
+
+\ifnum\lang = 0
+    \usepackage[english]{babel}
+\fi
+% ========== END OF [LANGUAGE] ==========
+
+
+
 
 
 \begin{document}
@@ -30,8 +43,13 @@
 
 \begin{center}
 % Upper part of the page
-\textbf{\Large UNIVERSITY OF SCIENCE}\\
-\textbf{\Large FACULTY OF INFORMATION TECHNOLOGY}\\
+\ifnum\lang = 0
+    \textbf{\Large UNIVERSITY OF SCIENCE}\\[0.2cm]
+    \textbf{\Large FACULTY OF INFORMATION TECHNOLOGY}\\
+\else
+    \textbf{\Large TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN}\\
+    \textbf{\Large KHOA CÔNG NGHỆ THÔNG TIN}\\
+\fi
 
 % University Logo
 \begin{figure}[!h]
@@ -40,10 +58,10 @@
 \end{figure}
 
 % Title
-\HRule \\[0.4cm]
+\rule{\textwidth}{1pt} \\[0.4cm]
 {\huge \bfseries REPORT}\\[0.4cm]
 \textsc{\Large Subject}
-\HRule \\[1cm]
+\rule{\textwidth}{1pt} \\[1cm]
 
 % Student name
 \begin{center}
@@ -52,13 +70,19 @@
 
 % Advisor name
 \begin{center}
-    \textbf{\Large Lecturers: \\[0.2cm]}
+    \ifnum\lang = 0
+        \textbf{\Large Lecturers: \\[0.2cm]}
+    \else
+        \textbf{\Large Giảng viên hướng dẫn: \\[0.2cm]}
+    \fi
     \Large{Mr.ABC \\[0.2cm] Mr.DEF \\[0.2cm] Mr.123}
 \end{center}
 \vfill
 
 % Bottom of the page
-\selectlanguage{english} % Change language
+\ifnum\lang = 0
+    \selectlanguage{english} 
+\fi
 {\large \today}
 \end{center}
 \end{titlepage}
@@ -74,7 +98,11 @@
 \fancyhf{}
 \lhead{\textbf{Left}}
 \rhead{\textbf{Right}}
-\rfoot{Page \thepage}
+\ifnum\lang = 0
+    \rfoot{Page \thepage}
+\else
+    \rfoot{Trang \thepage}
+\fi
 % ========== END [HEADER AND FOOTER] ==========
 
 
@@ -94,9 +122,15 @@
 
 
 % ========== [SECTION NUMBERING] ==========
+\setcounter{secnumdepth}{5} % Section numbering depth 
+
 \renewcommand\thesection{\arabic{section}} % Section start from 1,2,3...
 \renewcommand\thesubsection{\thesection.\arabic{subsection}} % Subsection start from 1,2,3,...
 \renewcommand\thesubsubsection{\alph{subsubsection}} 
+
+\titleformat*{\section}{\Large\bfseries}
+\titleformat*{\subsection}{\Large\bfseries}
+\titleformat*{\subsubsection}{\Large\bfseries}
 % ========== END [SECTION NUMBERING] ==========
 
 
@@ -104,10 +138,14 @@
 
 
 % ========== [MAIN CONTENT] ==========
+\section{Demo}
+\begin{itemize}
+    \item Demo 123
+\end{itemize}
+
 \section{References}
 \begin{itemize}
-    \item \href{https://tex.stackexchange.com/questions/407812/page-border-for-cover-page-in-latex}{Title page border}
+    \item Template: 21127203
 \end{itemize}
 % ========== END [MAIN CONTENT] ==========
 \end{document}
-% ========== ducviet5138 ==========
