@@ -1,31 +1,93 @@
+% ========== [LIBRARIES] ==========
 \documentclass{report}
 \usepackage{tikz}
 \usepackage{fancyhdr}
 \usepackage[utf8]{vietnam}
 \usepackage{hyperref} % Hyperlink
 \usepackage{parskip}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[a4paper, left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usetikzlibrary{calc}
 \usepackage{titlesec} % Change section font
+\usepackage{csquotes} % Ref
+\usepackage{silence} % Ref
+\WarningFilter{csquotes}{No space factor} % Ref
+\usepackage[datamodel=ref/model]{biblatex} % Ref
+\usepackage{pgffor} % For loop
+\usepackage{mfirstuc} % Captialize only the 1st letter
+\usepackage{textcase} % Captialize only the 1st letter
+\usepackage{pdflscape} % Lándscape page
+\hypersetup{  % Change color of hyperlink
+    colorlinks = true,
+    citecolor = {blue},
+    linkcolor = black,
+    urlcolor = blue
+}
+% ========== END OF [LIBRARIES] ==========
 
 
 
 
-
-% ========== [LANGUAGE] ==========
-\def\lang{1} % 0 == English, 1 == Vietnamese
+% ========== [SETUP MAIN PART] ==========
+% --- Language ---
+\def\lang{0} % 0 == English, 1 == Vietnamese
 
 \ifnum\lang = 0
     \usepackage[english]{babel}
 \fi
-% ========== END OF [LANGUAGE] ==========
+
+
+% --- Student(s) ---
+\def\students{Hoàng Đức Việt - 21127203, Nguyễn Văn A - 12345678}
+
+
+% --- Lecturer(s) ---
+\def\lecturers{Name 1, Name 2, Name 3}
+
+
+% --- Report and Subject in Cover page ---
+\def\reportText{REPORT}
+\def\subjectText{SUBJECT}
+% ========== END OF [SETUP MAIN PART] ==========
+
+
+
+
+
+% ========== [Left and right header] ==========
+\newcommand{\capitalizefirst}[1]{\capitalisewords{\MakeTextLowercase{#1}}}
+\def\toplefttext{\capitalizefirst{\reportText}}
+\def\toprighttext{\capitalizefirst{\subjectText}}
+% ========== END OF [Left and right header] ==========
+
+
+
+
+
+% ========== [References using Bib] ==========
+% Add src
+\addbibresource{ref/ref.bib}
+
+% Select {fontsize} and {linespacing}
+\renewcommand{\bibfont}{\fontsize{12}{16}\selectfont}
+
+% New command for "ref" 
+\DeclareBibliographyDriver{ref}{%
+    \newunit
+    \printfield{note}%
+    \newunit\newblock
+    \ifnum\lang = 0
+        \printtext[parens]{Last visited: \printfield{lastvisited}}
+    \else
+        \printtext[parens]{Truy cập lần cuối: \printfield{lastvisited}}
+    \fi
+}
+% ========== End of [References using Bib] ==========
 
 
 
 
 
 \begin{document}
-
 % ========== [TITLE PAGE] ==========
 \begin{titlepage}
 
@@ -54,19 +116,23 @@
 % University Logo
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=8cm, height=8cm]{KHTN.png}
+    \includegraphics[width=8cm, height=8cm]{imgs/KHTN.png}
 \end{figure}
 
 % Title
 \rule{\textwidth}{1pt} \\[0.4cm]
-{\huge \bfseries REPORT}\\[0.4cm]
-\textsc{\Large Subject}
+{\huge \bfseries \reportText}\\[0.4cm]
+\textsc{\Large \subjectText}
 \rule{\textwidth}{1pt} \\[1cm]
 
 % Student name
 \begin{center}
-    \textbf{\Large HOÀNG ĐỨC VIỆT - 21127203}\\[4cm]
+    \textbf{
+        \foreach \element in \students
+        {\Large \element \\[0.2cm]}
+    }
 \end{center}
+\vspace{3.8cm}
 
 % Advisor name
 \begin{center}
@@ -75,7 +141,8 @@
     \else
         \textbf{\Large Giảng viên hướng dẫn: \\[0.2cm]}
     \fi
-    \Large{Mr.ABC \\[0.2cm] Mr.DEF \\[0.2cm] Mr.123}
+    \foreach \element in \lecturers
+    {\Large \element \\[0.2cm]}
 \end{center}
 \vfill
 
@@ -96,13 +163,29 @@
 \pagestyle{fancy}
 \setlength{\headheight}{0.5cm}
 \fancyhf{}
-\lhead{\textbf{Left}}
-\rhead{\textbf{Right}}
+% Normal page
+\lhead{\textbf{\toplefttext}}
+\rhead{\textbf{\toprighttext}}
+
 \ifnum\lang = 0
     \rfoot{Page \thepage}
 \else
     \rfoot{Trang \thepage}
 \fi
+
+% Ref page
+\fancypagestyle{plain}{
+\fancyhf{}
+
+\fancyhead[L]{\textbf{\toplefttext}}
+\fancyhead[R]{\textbf{\toprighttext}}
+
+\ifnum\lang = 0
+    \fancyfoot[R]{Page \thepage}
+\else
+    \fancyfoot[R]{Trang \thepage}
+\fi
+}
 % ========== END [HEADER AND FOOTER] ==========
 
 
@@ -128,7 +211,7 @@
 \renewcommand\thesubsection{\thesection.\arabic{subsection}} % Subsection start from 1,2,3,...
 \renewcommand\thesubsubsection{\alph{subsubsection}} 
 
-\titleformat*{\section}{\Large\bfseries}
+\titleformat*{\section}{\LARGE\bfseries}
 \titleformat*{\subsection}{\Large\bfseries}
 \titleformat*{\subsubsection}{\Large\bfseries}
 % ========== END [SECTION NUMBERING] ==========
@@ -137,23 +220,14 @@
 
 
 
-% ========== NEW COMMAND FOR SUBITEM ==========
-\newcommand{\Subitem}[0]{\subitem $\scriptscriptstyle{\square} \ $}
-% ========== END [NEW COMMAND FOR SUBITEM] ==========
-
-
-
-
-
 % ========== [MAIN CONTENT] ==========
-\section{Demo}
-\begin{itemize}
-    \item Demo 123
-\end{itemize}
+\section{Section 1}
+\input{content/section1}
 
-\section{References}
-\begin{itemize}
-    \item Template: 21127203
-\end{itemize}
+\ifnum\lang = 0
+    \printbibliography[heading=bibintoc,title={References}]
+\else
+    \printbibliography[heading=bibintoc,title={Tài liệu tham khảo}]
+\fi
 % ========== END [MAIN CONTENT] ==========
 \end{document}
